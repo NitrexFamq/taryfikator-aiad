@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taryfikator Kar</title>
+  <style>
+    /* Globalne style */
+    body {
+      background-color: #0d0d0d;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Siatka dostosowująca kolumny */
+      gap: 15px;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 1.4em;
+      margin-top: 35px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+    }
+
+    .paragraf-box {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    .paragraf-box:hover {
+      background-color: #262626;
+      transform: scale(1.02);
+    }
+
+    .title {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .info {
+      font-size: 0.95em;
+      color: #ccc;
+    }
+
+    .info span {
+      margin-right: 15px;
+    }
+
+    /* Dostosowanie do małych ekranów */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5em;
+      }
+
+      .paragraf-box {
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.2em;
+      }
+      
+      .paragraf-box {
+        padding: 10px;
+      }
+    }
+
+    /* Przycisk pomocy */
+    .help-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    /* Animacja obrotu przycisku */
+    .help-icon.rotate {
+      transform: rotate(180deg);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .help-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      opacity: 0;
+      background-color: #1a1a1a;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      z-index: 999;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      font-size: 1em;
+    }
+
+    .help-popup.active {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .help-popup h2 {
+      margin-top: 0;
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .help-popup p {
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Przycisk pomocy -->
+  <div class="help-icon" id="helpBtn">X</div> <!-- Przycisk zaczyna się jako "X" -->
+  <div class="overlay" id="overlay"></div>
+  <div class="help-popup" id="helpPopup">
+    <h2>Wyjaśnienie stopni warnów</h2>
+    <p><span class="bold">T1</span> – 25.000$ lub odpracowanie kary</p>
+    <p><span class="bold">T2</span> – 50.000$ oraz odpracowanie kary</p>
+    <p><span class="bold">T3</span> – 125.000$ oraz odpracowanie kary</p>
+    <p><span class="bold">T4</span> – 450.000$ oraz zawieszenie/do czasu spłaty</p>
+    <p><span class="bold">T5</span> – Do wyjaśnienia / Nie do zdjęcia</p>
+    <div class="section-title">Dodatkowe informacje</div>
+    <p>Odpracowanie kary możecie podzielić na parę dni – w przypadku godzinnego stacjonowania</p>
+    <p>Pamiętaj o obowiązku nagrywania całego przebiegu odbycia kary lub robienia ss co 10–15 minut.</p>
+  </div>
+
+  <h1>Taryfikator Kar</h1>
+
+  <!-- Sekcja A -->
+  <div class="section-title">Paragrafy A</div>
+  <div class="paragraf-box">
+    <div class="title">Brak aktywności 2 dni - Bez wypisanego urlopu</div>
+    <div class="info">
+      <span>Paragraf: A.1</span>
+      <span>Kara: Warn</span>
+      <span>Tier: 1</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Nieodpowiednie zachowanie</div>
+    <div class="info">
+      <span>Paragraf: A.2</span>
+      <span>Kara: Warn</span>
+      <span>Tier: 1-2</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Zaśmiecanie magazynu</div>
+    <div class="info">
+      <span>Paragraf: A.3</span>
+      <span>Kara: Warn</span>
+      <span>Tier: 1</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Niedostosowanie się do dresscode</div>
+    <div class="info">
+      <span>Paragraf: A.4</span>
+      <span>Kara: Warn</span>
+      <span>Tier: 1-3</span>
+    </div>
+  </div>
+
+  <!-- Sekcja B -->
+  <div class="section-title">Paragrafy B</div>
+  <div class="paragraf-box">
+    <div class="title">Kłamanie zarządowi</div>
+    <div class="info">
+      <span>Paragraf: B.1</span>
+      <span>Kara: Warn</span>
+      <span>Tier: 2-4</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Obrażanie innych członków</div>
+    <div class="info">
+      <span>Paragraf: B.2</span>
+      <span>Kara: Warn</span>
+      <span>Tier: 2-5</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Ignorowanie komunikacji</div>
+    <div class="info">
+      <span>Paragraf: B.3</span>
+      <span>Kara: Warn</span>
+      <span>Tier: 1-2</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Wynoszenie przedmiotów z magazynu</div>
+    <div class="info">
+      <span>Paragraf: B.4</span>
+      <span>Kara: Usunięcie z BL</span>
+      <span>Tier: 5</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Ukrywanie ważnych informacji</div>
+    <div class="info">
+      <span>Paragraf: B.5</span>
+      <span>Kara: Zawieszenie</span>
+      <span>Tier: 4</span>
+    </div>
+  </div>
+
+  <!-- Sekcja C -->
+  <div class="section-title">Paragrafy C</div>
+  <div class="paragraf-box">
+    <div class="title">Celowe sabotowanie działań rodziny</div>
+    <div class="info">
+      <span>Paragraf: C.1</span>
+      <span>Kara: Do wyjaśnienia</span>
+      <span>Tier: 5</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Zgłaszanie rodziny bez podstaw</div>
+    <div class="info">
+      <span>Paragraf: C.2</span>
+      <span>Kara: BL</span>
+      <span>Tier: 5</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Ujawnienie poufnych rozmów z zarządem</div>
+    <div class="info">
+      <span>Paragraf: C.3</span>
+      <span>Kara: BL</span>
+      <span>Tier: 5</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Współpraca z wrogą frakcją</div>
+    <div class="info">
+      <span>Paragraf: C.4</span>
+      <span>Kara: BL</span>
+      <span>Tier: 5</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Udzielanie się w innych rodzinach bez zgody</div>
+    <div class="info">
+      <span>Paragraf: C.5</span>
+      <span>Kara: Do wyjaśnienia</span>
+      <span>Tier: 4-5</span>
+    </div>
+  </div>
+  <div class="paragraf-box">
+    <div class="title">Podejrzenie o zdradę</div>
+    <div class="info">
+      <span>Paragraf: C.6</span>
+      <span>Kara: Do wyjaśnienia </span>
+      <span>Tier: 5</span>
+    </div>
+  </div>
+
+  <script>
+    const helpBtn = document.getElementById('helpBtn');
+    const overlay = document.getElementById('overlay');
+    const helpPopup = document.getElementById('helpPopup');
+    
+    helpBtn.addEventListener('click', () => {
+      overlay.classList.toggle('active');
+      helpPopup.classList.toggle('active');
+      helpBtn.classList.toggle('rotate'); // Dodanie klasy dla animacji obrotu
+      // Zmiana tekstu przycisku na "?" i z powrotem na "X"
+      if (helpBtn.textContent === 'X') {
+        helpBtn.textContent = '?';
+      } else {
+        helpBtn.textContent = 'X';
+      }
+    });
+
+    overlay.addEventListener('click', () => {
+      overlay.classList.remove('active');
+      helpPopup.classList.remove('active');
+      helpBtn.classList.remove('rotate'); // Usunięcie animacji obrotu
+      helpBtn.textContent = 'X'; // Przywrócenie "X" po zamknięciu
+    });
+  </script>
+</body>
+</html>
