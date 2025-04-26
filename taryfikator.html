@@ -7,27 +7,16 @@
   <style>
     /* Globalne style */
     body {
+      background-color: black; /* Czarny kolor tła */
       color: #ffffff;
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Siatka dostosowująca kolumny */
-      gap: 15px;
       padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
       position: relative;
       z-index: 1;
-    }
-
-    /* Wideo w tle */
-    .background-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1; /* Wideo tła poniżej treści */
     }
 
     h1 {
@@ -76,7 +65,6 @@
       h1 {
         font-size: 1.5em;
       }
-
       .paragraf-box {
         padding: 12px;
       }
@@ -86,7 +74,6 @@
       h1 {
         font-size: 1.2em;
       }
-      
       .paragraf-box {
         padding: 10px;
       }
@@ -172,19 +159,12 @@
     .bold {
       font-weight: bold;
     }
-
   </style>
 </head>
 <body>
-  <!-- Wideo tła -->
-  <video class="background-video" autoplay muted loop>
-  <source src="video/tło.mp4" type="video/mp4">
-  Twoja przeglądarka nie obsługuje wideo.
-</video>
-
 
   <!-- Przycisk pomocy -->
-  <div class="help-icon" id="helpBtn">?</div> <!-- Przycisk zaczyna się jako "X" -->
+  <div class="help-icon" id="helpBtn">?</div>
   <div class="overlay" id="overlay"></div>
   <div class="help-popup" id="helpPopup">
     <h2>Wyjaśnienie stopni warnów</h2>
@@ -325,12 +305,11 @@
     const helpBtn = document.getElementById('helpBtn');
     const overlay = document.getElementById('overlay');
     const helpPopup = document.getElementById('helpPopup');
-    
+
     helpBtn.addEventListener('click', () => {
       overlay.classList.toggle('active');
       helpPopup.classList.toggle('active');
-      helpBtn.classList.toggle('rotate'); // Dodanie klasy dla animacji obrotu
-      // Zmiana tekstu przycisku na "?" i z powrotem na "X"
+      helpBtn.classList.toggle('rotate');
       if (helpBtn.textContent === 'x') {
         helpBtn.textContent = '?';
       } else {
@@ -341,8 +320,8 @@
     overlay.addEventListener('click', () => {
       overlay.classList.remove('active');
       helpPopup.classList.remove('active');
-      helpBtn.classList.remove('rotate'); // Usunięcie animacji obrotu
-      helpBtn.textContent = '?'; // Przywrócenie "X" po zamknięciu
+      helpBtn.classList.remove('rotate');
+      helpBtn.textContent = '?';
     });
   </script>
 </body>
